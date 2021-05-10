@@ -1,0 +1,2 @@
+11:18:56.968 DEBUG --- [main] org.hibernate.SQL : alter table cliente drop constraint if exists FKc2150e1t4hbr2owxjx1smbcwc
+11:21:37.818 DEBUG --- [main] org.hibernate.SQL : alter table cliente drop constraint if exists FKc2150e1t4hbr2owxjx1smbcwc
