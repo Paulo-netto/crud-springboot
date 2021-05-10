@@ -1,4 +1,4 @@
-package com.test.livelo.persistence.modal;
+package com.test.livelo.persistence.model;
 
 import java.io.Serializable;
 
@@ -20,7 +20,7 @@ public class Cidade implements Serializable {
 	@Column(name = "cidade_id")
 	private Long id;
 
-	@Column(name = "nome")
+	@Column(name = "cidade_nome")
 	private String nome;
 
 	@Column(name = "estado")
@@ -30,9 +30,12 @@ public class Cidade implements Serializable {
 
 	}
 
-	public Cidade(String nome, String estado) {
-		this.nome = nome;
-		this.estado = estado;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNome() {

@@ -1,4 +1,4 @@
-package com.test.livelo.persistence.enums;
+package com.test.livelo.persistence.enumeration;
 
 public enum SexoEnum {
 

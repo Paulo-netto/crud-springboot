@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.test.livelo.persistence.dto.CidadeDTO;
-import com.test.livelo.persistence.modal.Cidade;
+import com.test.livelo.persistence.dto.cidade.CidadeDTO;
+import com.test.livelo.persistence.model.Cidade;
 import com.test.livelo.persistence.repository.CidadeRepositoy;
 import com.test.livelo.service.ConstantsUtil.ConstantsUtil;
 import com.test.livelo.service.exception.NotFoundException;
@@ -28,26 +28,29 @@ public class CidadeService {
 	 * 
 	 * @param cidadeDTO
 	 */
-	public void cadastrar(@Valid CidadeDTO cidadeDTO) {
-		cidadeRepositoy.save(CidadeMapper.mapper(cidadeDTO));
+	public Cidade cadastrar(@Valid CidadeDTO cidadeDTO) {
+		return cidadeRepositoy.save(CidadeMapper.mapper(cidadeDTO));
 	}
 
 	public List<Cidade> buscarPorNome(String nome) {
-		if (nome == null) {
-			throw new NotFoundException(ConstantsUtil.MSG_CIDADE_NAO_ENCONTRADO);
-		}
-		return cidadeRepositoy.findByNome(nome);
+		List<Cidade> list = cidadeRepositoy.findByNome(nome);
+		validacaoBusca(list);
+		return list;
 	}
 
 	public List<Cidade> buscarPorEstado(String estado) {
-		if (estado == null) {
-			throw new NotFoundException(ConstantsUtil.MSG_ESTADO_NAO_ENCONTRADO);
-		}
-		return cidadeRepositoy.findByEstado(estado);
+		List<Cidade> list = cidadeRepositoy.findByEstado(estado);
+		validacaoBusca(list);
+		return list;
 	}
- 
+
 	public Optional<Cidade> findById(Long id) {
 		return cidadeRepositoy.findById(id);
 	}
-	
+
+	private void validacaoBusca(List<Cidade> list) {
+		if (list.isEmpty()) {
+			throw new NotFoundException(ConstantsUtil.MSG_BUSCA_NAO_ENCONTRADO);
+		}
+	}
 }

@@ -1,4 +1,4 @@
-package com.test.livelo.persistence.modal;
+package com.test.livelo.persistence.model;
 
 import java.io.Serializable;
 
@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.test.livelo.persistence.enums.SexoEnum;
+import com.test.livelo.persistence.enumeration.SexoEnum;
 
 @Entity
 @Table(name = "cliente")

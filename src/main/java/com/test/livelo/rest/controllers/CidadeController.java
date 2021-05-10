@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.test.livelo.persistence.dto.CidadeDTO;
-import com.test.livelo.persistence.modal.Cidade;
+import com.test.livelo.persistence.dto.cidade.CidadeDTO;
+import com.test.livelo.persistence.model.Cidade;
 import com.test.livelo.service.CidadeService;
 import com.test.livelo.service.exception.NegocioException;
 import com.test.livelo.service.exception.NotFoundException;
@@ -41,7 +41,7 @@ public class CidadeController {
 
 	@PostMapping
 	@ApiOperation(value = "Cadastra uma cidade na aplicação")
-	public ResponseEntity<Void> cadastrar(@RequestBody @Valid CidadeDTO cidadeDTO) {
+	public ResponseEntity<?> cadastrar(@RequestBody @Valid CidadeDTO cidadeDTO) {
 		log.debug("Requisição REST para cadastrar a cidade : {}", cidadeDTO);
 		cidadeService.cadastrar(cidadeDTO);
 		return ResponseEntity.ok().build();
@@ -60,22 +60,20 @@ public class CidadeController {
 		log.debug("Requisição REST para buscar a Cidade por estado : {}", estado);
 		return ResponseEntity.ok(cidadeService.buscarPorEstado(estado));
 	}
-	
-	
+
 	@ExceptionHandler(NegocioException.class)
 	public ResponseEntity<JsonNode> handleException(NegocioException e) {
-    	HttpStatus badRequest = HttpStatus.BAD_REQUEST;
-    	ObjectNode jsonNode = new ObjectMapper().createObjectNode();
+		HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+		ObjectNode jsonNode = new ObjectMapper().createObjectNode();
 		jsonNode.put("status", badRequest.value());
 		jsonNode.put("message", e.getMessage());
 		return ResponseEntity.status(badRequest).body(jsonNode);
 	}
-	
-	
+
 	@ExceptionHandler(NotFoundException.class)
 	public ResponseEntity<JsonNode> handleException(NotFoundException e) {
-    	HttpStatus badRequest = HttpStatus.NOT_FOUND;
-    	ObjectNode jsonNode = new ObjectMapper().createObjectNode();
+		HttpStatus badRequest = HttpStatus.NOT_FOUND;
+		ObjectNode jsonNode = new ObjectMapper().createObjectNode();
 		jsonNode.put("status", badRequest.value());
 		jsonNode.put("message", e.getMessage());
 		return ResponseEntity.status(badRequest).body(jsonNode);

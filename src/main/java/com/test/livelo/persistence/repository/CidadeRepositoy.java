@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.test.livelo.persistence.modal.Cidade;
+import com.test.livelo.persistence.model.Cidade;
 
 @Repository
 public interface CidadeRepositoy extends JpaRepository<Cidade, Long> {

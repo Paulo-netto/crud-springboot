@@ -2,9 +2,9 @@ package com.test.livelo.service.mapper;
 
 import com.test.livelo.persistence.dto.cliente.CadastrarClienteDTO;
 import com.test.livelo.persistence.dto.cliente.EditarClienteDTO;
-import com.test.livelo.persistence.enums.SexoEnum;
-import com.test.livelo.persistence.modal.Cidade;
-import com.test.livelo.persistence.modal.Cliente;
+import com.test.livelo.persistence.enumeration.SexoEnum;
+import com.test.livelo.persistence.model.Cidade;
+import com.test.livelo.persistence.model.Cliente;
 
 public class ClienteMapper {
 

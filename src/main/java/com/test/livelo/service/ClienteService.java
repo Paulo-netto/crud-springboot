@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.test.livelo.persistence.dto.cliente.CadastrarClienteDTO;
 import com.test.livelo.persistence.dto.cliente.EditarClienteDTO;
-import com.test.livelo.persistence.modal.Cidade;
-import com.test.livelo.persistence.modal.Cliente;
+import com.test.livelo.persistence.model.Cidade;
+import com.test.livelo.persistence.model.Cliente;
 import com.test.livelo.persistence.repository.ClienteRepository;
 import com.test.livelo.service.ConstantsUtil.ConstantsUtil;
 import com.test.livelo.service.exception.NegocioException;
@@ -29,7 +29,12 @@ public class ClienteService {
 	private CidadeService cidadeService;
 
 	public Optional<Cliente> buscarPorNome(String nome) {
-		return clienteRepository.findByNome(nome);
+		Optional<Cliente> cliente = clienteRepository.findByNome(nome);
+		if (!cliente.isPresent()) {
+			throw new NotFoundException(ConstantsUtil.MSG_BUSCA_NAO_ENCONTRADO);
+		}
+
+		return cliente;
 	}
 
 	public Cliente buscarPorId(Long id) {
@@ -45,23 +50,22 @@ public class ClienteService {
 
 	}
 
-
-	public void atualizar(Long id, EditarClienteDTO editar) {
+	public Cliente atualizar(Long id, EditarClienteDTO editar) {
 		Cliente cliente = this.clienteRepository.getOne(id);
-		if (cliente == null) {
+		if (cliente.getId() == null) {
 			throw new NegocioException(ConstantsUtil.MSG_CLIENTE_NAO_ENCONTRADO);
 		}
 		ClienteMapper.mapperEditar(cliente, editar);
-		clienteRepository.save(cliente);
-	} 
+		return clienteRepository.save(cliente);
+	}
 
-	public void cadastrar(@Valid CadastrarClienteDTO cadastrar) {
+	public Cliente cadastrar(@Valid CadastrarClienteDTO cadastrar) {
 		Optional<Cidade> id = this.cidadeService.findById(cadastrar.getCidadeId());
 		if (!id.isPresent()) {
 			throw new NegocioException(ConstantsUtil.MSG_CIDADE_NAO_ENCONTRADO_ID);
 		}
 		Cliente cliente = ClienteMapper.mapper(cadastrar, id.get());
-		clienteRepository.save(cliente);
+		return clienteRepository.save(cliente);
 	}
 
 }

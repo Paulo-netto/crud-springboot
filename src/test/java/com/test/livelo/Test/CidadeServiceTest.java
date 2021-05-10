@@ -1,9 +1,11 @@
 package com.test.livelo.Test;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -11,15 +13,18 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.test.livelo.persistence.dto.CidadeDTO;
+import com.test.livelo.persistence.dto.cidade.CidadeDTO;
+import com.test.livelo.persistence.model.Cidade;
 import com.test.livelo.persistence.repository.CidadeRepositoy;
 import com.test.livelo.service.CidadeService;
 import com.test.livelo.service.exception.NotFoundException;
 
-@SpringBootTest 
+@SpringBootTest
 class CidadeServiceTest {
 
-	private static final String STRING_TEST = null;
+	private static final String STRING_TEST = "test";
+
+	private static final Long ID_TEST = 1L;
 
 	@Mock
 	private CidadeRepositoy cidadeRepositoy;
@@ -29,13 +34,13 @@ class CidadeServiceTest {
 
 	@Test
 	void buscarPorNomeTest() {
-		Mockito.when(cidadeRepositoy.findByNome(Mockito.anyString())).thenReturn(new ArrayList<>());
+		Mockito.when(cidadeRepositoy.findByNome(Mockito.anyString())).thenReturn(mockListCidade());
 		assertNotNull(cidadeService.buscarPorNome(Mockito.anyString()));
 	}
 
 	@Test
 	void buscarPorEstadoTest() {
-		Mockito.when(cidadeRepositoy.findByEstado(Mockito.anyString())).thenReturn(new ArrayList<>());
+		Mockito.when(cidadeRepositoy.findByEstado(Mockito.anyString())).thenReturn(mockListCidade());
 		assertNotNull(cidadeService.buscarPorEstado(Mockito.anyString()));
 	}
 
@@ -51,17 +56,43 @@ class CidadeServiceTest {
 		assertThrows(NotFoundException.class, () -> cidadeService.buscarPorEstado(null));
 	}
 
-//	@Test
-//	void cadastrarTest() {
-//		Mockito.when(cidadeRepositoy.save(Mockito.any())).thenReturn(mockCidadeDTO());
-//		cidadeService.cadastrar(mockCidadeDTO());
-//	}
+	@Test
+	void cadastrarTest() {
+		Mockito.when(cidadeRepositoy.save(Mockito.any(Cidade.class))).thenReturn(new Cidade());
+		assertNotNull(cidadeService.cadastrar(mockCidadeDTO()));
+	}
+
+	@Test
+	void buscarPorIdTest() {
+		Mockito.when(cidadeRepositoy.findById(Mockito.anyLong())).thenReturn(getCidadeOptional());
+		assertNotNull(cidadeService.findById(Mockito.anyLong()));
+	}
 
 	private CidadeDTO mockCidadeDTO() {
 		CidadeDTO dto = new CidadeDTO();
-		dto.setNome(STRING_TEST);
+		dto.setCidade(STRING_TEST);
 		dto.setEstado(STRING_TEST);
 		return dto;
+	}
+
+	private Optional<Cidade> getCidadeOptional() {
+		Cidade cidade = new Cidade();
+		return Optional.of(cidade);
+	}
+
+	private Cidade mockCidade() {
+		Cidade cidade = new Cidade();
+		cidade.setId(ID_TEST);
+		cidade.setEstado(STRING_TEST);
+		cidade.setNome(STRING_TEST);
+		return cidade;
+	}
+
+	private List<Cidade> mockListCidade() {
+		List<Cidade> list = new ArrayList<>();
+		list.add(mockCidade());
+		return list;
+
 	}
 
 }

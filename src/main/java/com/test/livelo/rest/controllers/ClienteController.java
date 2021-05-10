@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.test.livelo.persistence.dto.cliente.CadastrarClienteDTO;
 import com.test.livelo.persistence.dto.cliente.EditarClienteDTO;
-import com.test.livelo.persistence.modal.Cliente;
+import com.test.livelo.persistence.model.Cliente;
 import com.test.livelo.service.ClienteService;
 import com.test.livelo.service.exception.NegocioException;
 import com.test.livelo.service.exception.NotFoundException;
@@ -61,14 +61,14 @@ public class ClienteController {
 
 	@PostMapping
 	@ApiOperation(value = "Cadastra um cliente na aplicação")
-	public ResponseEntity<Void> cadastrar(@RequestBody @Valid CadastrarClienteDTO cadastrar) {
+	public ResponseEntity<?> cadastrar(@RequestBody @Valid CadastrarClienteDTO cadastrar) {
 		log.debug("Requisição REST para cadastrar um cliente : {}", cadastrar);
 		clienteService.cadastrar(cadastrar);
 		return ResponseEntity.ok().build();
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity<Void> atualizar(@PathVariable Long id, @Valid @RequestBody EditarClienteDTO editar) {
+	public ResponseEntity<?> atualizar(@PathVariable Long id, @Valid @RequestBody EditarClienteDTO editar) {
 		log.debug("Requisição REST para editar o Cliente : {}", editar);
 		clienteService.atualizar(id, editar);
 		return ResponseEntity.ok().build();
