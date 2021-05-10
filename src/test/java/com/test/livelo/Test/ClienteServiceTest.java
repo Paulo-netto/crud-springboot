@@ -11,10 +11,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.test.livelo.Test.persistence.modal.Cliente;
-import com.test.livelo.Test.persistence.repository.ClienteRepository;
-import com.test.livelo.Test.service.ClienteService;
-import com.test.livelo.Test.service.exception.NotFoundException;
+import com.test.livelo.persistence.modal.Cliente;
+import com.test.livelo.persistence.repository.ClienteRepository;
+import com.test.livelo.service.ClienteService;
+import com.test.livelo.service.exception.NotFoundException;
 
 @SpringBootTest
 class ClienteServiceTest {

@@ -11,10 +11,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.test.livelo.Test.persistence.dto.CidadeDTO;
-import com.test.livelo.Test.persistence.repository.CidadeRepositoy;
-import com.test.livelo.Test.service.CidadeService;
-import com.test.livelo.Test.service.exception.NotFoundException;
+import com.test.livelo.persistence.dto.CidadeDTO;
+import com.test.livelo.persistence.repository.CidadeRepositoy;
+import com.test.livelo.service.CidadeService;
+import com.test.livelo.service.exception.NotFoundException;
 
 @SpringBootTest 
 class CidadeServiceTest {
