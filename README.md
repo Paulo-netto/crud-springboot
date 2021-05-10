@@ -11,7 +11,7 @@ Para iniciar o projeto siga as instruções seguintes.
 * [Github](https://github.com/)
 * [Java SE Development Kit 8](https://www.oracle.com/)
 * [Maven 3.x](https://maven.apache.org/)
-* [PostgreSQL](https://www.postgresql.org/download/)
+* [PostgreSQL](https://www.postgresql.org/download/) ou [Docker] (https://www.docker.com/products/docker-desktop)
 
 ### Instalação
 
@@ -30,7 +30,10 @@ Importe o projeto em uma IDE de suas preferência.
 
 1 - Vá no arquivo crud-springboot\src\main\resources/application.properties e descomente o codigo 
 
-2 - Vá no arquivo crud-springboot\src\main\java\com\test\livelo\TestLiveloApplicationApplication.java e execute
+2 - Crie uma base de dados Postgres chamada test ou vá até a pasta docker na raiz do projeto e execute o seguinte comando
+# docker-compose up -d
+
+3 - Vá no arquivo crud-springboot\src\main\java\com\test\livelo\TestLiveloApplicationApplication.java e execute
 
 >**importante:** Swagger link para testar API http://localhost:8080/swagger-ui/
 
