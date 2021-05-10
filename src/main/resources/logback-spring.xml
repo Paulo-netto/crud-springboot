@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level --- [%thread] %logger{36} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="SQL_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/database.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/historico/database/database.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- Cada arquivo tera no maximo 10MB -->
+            <maxFileSize>1MB</maxFileSize>
+            <!-- Tamanho total de todos os arquivos do historico juntos, se tamanho total > 5MB,
+                ele ira deletando o arquivo mais antigo conforme necessidade -->
+            <totalSizeCap>5MB</totalSizeCap>
+            <!-- 60 dias para manter os arquivos do historico em disco -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level --- [%thread] %logger{36} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="APP_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/application.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/historico/application/application.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- Cada arquivo tera no maximo 10MB -->
+            <maxFileSize>1MB</maxFileSize>
+            <!-- Tamanho total de todos os arquivos do historico juntos, se tamanho total > 5MB,
+                ele ira deletando o arquivo mais antigo conforme necessidade -->
+            <totalSizeCap>5MB</totalSizeCap>
+            <!-- 60 dias para manter os arquivos do historico em disco -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level --- [%thread] %logger{36} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="SPRING_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/server.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/historico/server/server.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- Cada arquivo tera no maximo 10MB -->
+            <maxFileSize>300KB</maxFileSize>
+            <!-- Tamanho total de todos os arquivos do historico juntos, se tamanho total > 5MB,
+                ele ira deletando o arquivo mais antigo conforme necessidade -->
+            <totalSizeCap>5MB</totalSizeCap>
+            <!-- 60 dias para manter os arquivos do historico em disco -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level --- [%thread] %logger{36} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Spring Setup -->
+    <logger name="org.springframework.boot" level="TRACE">
+        <appender-ref ref="CONSOLE_APPENDER" />
+        <appender-ref ref="SPRING_APPENDER" />
+    </logger>
+    <logger name="org.springframework.data" level="TRACE">
+        <appender-ref ref="CONSOLE_APPENDER" />
+        <appender-ref ref="SPRING_APPENDER" />
+    </logger>
+    <logger name="org.springframework.web" level="TRACE">
+        <appender-ref ref="CONSOLE_APPENDER" />
+        <appender-ref ref="SPRING_APPENDER" />
+    </logger>
+
+    <!-- Server Start -->
+    <logger name="org.apache.catalina" level="INFO">
+        <appender-ref ref="CONSOLE_APPENDER" />
+        <appender-ref ref="SPRING_APPENDER" />
+    </logger>
+    <logger name="org.springframework.boot.web.embedded.tomcat" level="INFO">
+        <appender-ref ref="CONSOLE_APPENDER" />
+        <appender-ref ref="SPRING_APPENDER" />
+    </logger>
+
+    <!-- Databse Log -->
+    <logger name="org.hibernate.SQL" level="DEBUG">
+        <appender-ref ref="SQL_APPENDER" /></logger>
+    <logger name="org.hibernate.type.descriptor.sql" level="TRACE">
+        <appender-ref ref="SQL_APPENDER" />
+    </logger>
+
+    <!-- Application Log -->
+    <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG">
+        <appender-ref ref="APP_APPENDER" />
+    </logger>
+    <logger name="org.springframework.web.client.RestTemplate" level="DEBUG">
+        <appender-ref ref="APP_APPENDER" />
+    </logger>
+    <logger name="com.br.cooperativismo" level="DEBUG">
+        <appender-ref ref="APP_APPENDER" />
+    </logger>
+
+</configuration>
