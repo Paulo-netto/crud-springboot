@@ -1,5 +1,6 @@
 package com.test.livelo.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -28,9 +29,9 @@ public class ClienteService {
 	@Autowired
 	private CidadeService cidadeService;
 
-	public Optional<Cliente> buscarPorNome(String nome) {
-		Optional<Cliente> cliente = clienteRepository.findByNome(nome);
-		if (!cliente.isPresent()) {
+	public List<Cliente> buscarPorNome(String nome) {
+		List<Cliente> cliente = clienteRepository.findByNome(nome);
+		if (cliente.isEmpty()) {
 			throw new NotFoundException(ConstantsUtil.MSG_BUSCA_NAO_ENCONTRADO);
 		}
 

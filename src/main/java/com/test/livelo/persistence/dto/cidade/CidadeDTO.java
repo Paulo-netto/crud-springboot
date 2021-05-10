@@ -17,6 +17,15 @@ public class CidadeDTO implements Serializable {
 	@NotNull
 	private String estado;
 
+	public CidadeDTO() {
+
+	}
+
+	public CidadeDTO(String cidade, String estado) {
+		this.cidade = cidade;
+		this.estado = estado;
+	}
+
 	public String getCidade() {
 		return cidade;
 	}

@@ -1,5 +1,7 @@
 package com.test.livelo.rest.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -54,7 +56,7 @@ public class ClienteController {
 	}
 
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<?> buscarPorNome(@PathVariable String nome) {
+	public ResponseEntity<List<?>> buscarPorNome(@PathVariable String nome) {
 		log.debug("Requisição REST para buscar a Cliente por nome : {}", nome);
 		return ResponseEntity.ok(clienteService.buscarPorNome(nome));
 	}

@@ -23,34 +23,29 @@ public class CidadeService {
 	@Autowired
 	private CidadeRepositoy cidadeRepositoy;
 
-	/**
-	 * Cadastra uma Cidade
-	 * 
-	 * @param cidadeDTO
-	 */
 	public Cidade cadastrar(@Valid CidadeDTO cidadeDTO) {
 		return cidadeRepositoy.save(CidadeMapper.mapper(cidadeDTO));
 	}
 
-	public List<Cidade> buscarPorNome(String nome) {
-		List<Cidade> list = cidadeRepositoy.findByNome(nome);
+	public List<CidadeDTO> buscarPorNome(String nome) {
+		List<CidadeDTO> list = cidadeRepositoy.findByNome(nome);
 		validacaoBusca(list);
 		return list;
 	}
 
-	public List<Cidade> buscarPorEstado(String estado) {
-		List<Cidade> list = cidadeRepositoy.findByEstado(estado);
+	public List<CidadeDTO> buscarPorEstado(String estado) {
+		List<CidadeDTO> list = cidadeRepositoy.findByEstado(estado);
 		validacaoBusca(list);
 		return list;
+	}
+
+	private void validacaoBusca(List<CidadeDTO> list) {
+		if (list.isEmpty()) {
+			throw new NotFoundException(ConstantsUtil.MSG_BUSCA_NAO_ENCONTRADO);
+		}
 	}
 
 	public Optional<Cidade> findById(Long id) {
 		return cidadeRepositoy.findById(id);
-	}
-
-	private void validacaoBusca(List<Cidade> list) {
-		if (list.isEmpty()) {
-			throw new NotFoundException(ConstantsUtil.MSG_BUSCA_NAO_ENCONTRADO);
-		}
 	}
 }

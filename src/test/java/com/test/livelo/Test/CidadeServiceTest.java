@@ -24,8 +24,6 @@ class CidadeServiceTest {
 
 	private static final String STRING_TEST = "test";
 
-	private static final Long ID_TEST = 1L;
-
 	@Mock
 	private CidadeRepositoy cidadeRepositoy;
 
@@ -34,13 +32,13 @@ class CidadeServiceTest {
 
 	@Test
 	void buscarPorNomeTest() {
-		Mockito.when(cidadeRepositoy.findByNome(Mockito.anyString())).thenReturn(mockListCidade());
+		Mockito.when(cidadeRepositoy.findByNome(Mockito.anyString())).thenReturn(mockListCidadeDTO());
 		assertNotNull(cidadeService.buscarPorNome(Mockito.anyString()));
 	}
 
 	@Test
 	void buscarPorEstadoTest() {
-		Mockito.when(cidadeRepositoy.findByEstado(Mockito.anyString())).thenReturn(mockListCidade());
+		Mockito.when(cidadeRepositoy.findByEstado(Mockito.anyString())).thenReturn(mockListCidadeDTO());
 		assertNotNull(cidadeService.buscarPorEstado(Mockito.anyString()));
 	}
 
@@ -80,17 +78,9 @@ class CidadeServiceTest {
 		return Optional.of(cidade);
 	}
 
-	private Cidade mockCidade() {
-		Cidade cidade = new Cidade();
-		cidade.setId(ID_TEST);
-		cidade.setEstado(STRING_TEST);
-		cidade.setNome(STRING_TEST);
-		return cidade;
-	}
-
-	private List<Cidade> mockListCidade() {
-		List<Cidade> list = new ArrayList<>();
-		list.add(mockCidade());
+	private List<CidadeDTO> mockListCidadeDTO() {
+		List<CidadeDTO> list = new ArrayList<>();
+		list.add(mockCidadeDTO());
 		return list;
 
 	}

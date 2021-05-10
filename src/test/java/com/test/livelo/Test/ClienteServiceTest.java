@@ -3,6 +3,8 @@ package com.test.livelo.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -32,6 +34,8 @@ class ClienteServiceTest {
 
 	private static final String ENUM_TEST = "M";
 
+	private static final Long LONG_TEST = 2L;
+
 	@Mock
 	private ClienteRepository clienteRepository;
 
@@ -43,8 +47,14 @@ class ClienteServiceTest {
 
 	@Test
 	void buscarPorNomeTest() {
-		Mockito.when(clienteRepository.findByNome(Mockito.anyString())).thenReturn(mockOptionalCliente());
+		Mockito.when(clienteRepository.findByNome(Mockito.anyString())).thenReturn(mockListCliente());
 		assertNotNull(clienteService.buscarPorNome(Mockito.anyString()));
+	}
+
+	@Test
+	void buscarPorNomeNotFoundExceptionTest() {
+		Mockito.when(clienteRepository.findByNome(Mockito.anyString())).thenReturn(new ArrayList<>());
+		assertThrows(NotFoundException.class, () -> clienteService.buscarPorNome(null));
 	}
 
 	@Test
@@ -74,21 +84,41 @@ class ClienteServiceTest {
 
 	@Test
 	void atualizarTest() {
-		Mockito.when(clienteRepository.getOne(Mockito.anyLong())).thenReturn(new Cliente());
+		Mockito.when(clienteRepository.getOne(Mockito.anyLong())).thenReturn(mockCliente());
 		Mockito.when(clienteRepository.save(Mockito.any(Cliente.class))).thenReturn(new Cliente());
 		assertNotNull(clienteService.atualizar(Mockito.anyLong(), mockEditarClienteDTO()));
 	}
 
 	@Test
 	void atualizarNegocioExceptionTest() {
-		Mockito.when(clienteRepository.getOne(null)).thenReturn(new Cliente());
+		Mockito.when(clienteRepository.getOne(Mockito.anyLong())).thenReturn(new Cliente());
 		assertThrows(NegocioException.class, () -> clienteService.atualizar(Mockito.anyLong(), mockEditarClienteDTO()));
+	}
+
+	@Test
+	void removerTest() {
+		clienteService.remover(ID_TEST);
+		Mockito.verify(clienteRepository).deleteById(ID_TEST);
+	}
+
+	@Test
+	void removerNegocioExceptionTest() {
+		clienteService.remover(ID_TEST);
+		Mockito.verify(clienteRepository).deleteById(ID_TEST);
+		assertThrows(NegocioException.class, () -> clienteService.remover(null));
 	}
 
 	private Optional<Cliente> mockOptionalCliente() {
 		Cliente cliente = new Cliente();
 		cliente.setNome(STRING_TEST);
 		return Optional.of(cliente);
+	}
+
+	private Cliente mockCliente() {
+		Cliente cliente = new Cliente();
+		cliente.setId(LONG_TEST);
+		cliente.setNome(STRING_TEST);
+		return cliente;
 	}
 
 	private CadastrarClienteDTO mockCadastrarClienteDTO() {
@@ -111,6 +141,12 @@ class ClienteServiceTest {
 		Cidade cidade = new Cidade();
 		cidade.setId(ID_TEST);
 		return cidade;
+	}
+
+	private List<Cliente> mockListCliente() {
+		List<Cliente> list = new ArrayList<>();
+		list.add(mockCliente());
+		return list;
 	}
 
 	private Optional<Cidade> getCidadeOptional() {
