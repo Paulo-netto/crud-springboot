@@ -30,7 +30,7 @@ Importe o projeto em uma IDE de suas preferência.
 
 1 - Vá no arquivo crud-springboot\src\main\resources/application.properties e descomente o codigo 
 
-2 - Crie uma base de dados Postgres chamada test ou vá até a pasta docker na raiz do projeto e execute o seguinte comando
+2 - Crie uma base de dados Postgres chamada postgres ou vá até a pasta docker na raiz do projeto e execute o seguinte comando
 ```sh
 $ docker-compose up -d
 ```
